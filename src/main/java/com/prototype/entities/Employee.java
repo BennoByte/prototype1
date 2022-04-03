@@ -1,6 +1,7 @@
 package com.prototype.entities;
 
 import org.hibernate.envers.Audited;
+import org.hibernate.envers.RevisionTimestamp;
 
 import javax.persistence.*;
 import java.util.Date;

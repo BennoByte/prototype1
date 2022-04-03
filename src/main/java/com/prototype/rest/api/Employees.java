@@ -5,6 +5,9 @@ import com.prototype.entities.repositories.EmployeeRepository;
 import com.prototype.logic.EmployeeAccess;
 import org.hibernate.envers.AuditReader;
 import org.hibernate.envers.AuditReaderFactory;
+import org.hibernate.envers.query.AuditEntity;
+import org.hibernate.envers.query.AuditQuery;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -57,11 +60,12 @@ public class Employees {
         this.access.delete(id);
     }
 
-    @GetMapping("/employees/{id}/history")
-    public void tst(@PathVariable Long id) {
+    @GetMapping("/employees/{id}/revisions")
+    public List<Employee> getRevisions(@PathVariable Long id) {
         AuditReader reader = AuditReaderFactory.get(this.entityManager);
-        List<Number> revs = reader.getRevisions(Employee.class, id);
-        System.out.println("REVS: " + revs);
+        AuditQuery query = reader.createQuery().forRevisionsOfEntity(Employee.class, true, true);
+        query.add(AuditEntity.id().eq(id));
+        return query.getResultList();
     }
 
 }

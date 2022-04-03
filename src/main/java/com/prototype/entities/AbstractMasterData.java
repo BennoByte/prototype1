@@ -10,6 +10,7 @@ public abstract class AbstractMasterData {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(nullable = false, updatable = false)
     private Long id;
 
     @Column(length = 255, nullable = false)

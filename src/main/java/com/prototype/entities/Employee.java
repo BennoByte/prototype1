@@ -21,11 +21,18 @@ public class Employee extends AbstractMasterData {
     @Column(nullable = false)
     private String empNr2;
 
+    @Column(nullable = false)
+    private String email;
+
     @Column(nullable = true)
     private Date birthday;
 
     @Column(nullable = true)
     private Integer card;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "login_id", referencedColumnName = "id")
+    private Login login;
 
     public String getFirstname() {
         return firstname;
@@ -70,4 +77,14 @@ public class Employee extends AbstractMasterData {
     public boolean isCard() {
         return this.card != null;
     }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    
 }
